@@ -1,3 +1,3 @@
 # DSA-LAB
-Some important DSA programs
+Some important DSA programs.
 Author - Yashwanth -AL
