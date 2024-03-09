@@ -1,4 +1,4 @@
 # DSA-LAB
-Some important DSA programs.
+Some important Data Structures programs.
 <br>
 Author :  Yashwanth-AL
