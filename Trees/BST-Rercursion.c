@@ -26,7 +26,7 @@ main()
 	struct node *root=NULL,*p;
 	int choice,x;
 
-	root=insertNode(root,70);
+root=insertNode(root,70);
 root=insertNode(root,80);
 root=insertNode(root,75);
 root=insertNode(root,89);

@@ -9,17 +9,17 @@ struct TNode {
 };
 
 // Structure for a node in the queue used for level order traversal
-struct QueueNode {
-    struct TNode* treeNode;
-    struct QueueNode* link;
+struct QNode {
+    struct TNode* node;
+    struct QNode* link;
 };
 
 // Structure for the queue used for level order traversal
 struct Queue {
-    struct QueueNode *front, *rear;
+    struct QNode *front, *rear;
 };
 
-// Function to create a new node
+// Function to create a new Tree Node
 struct TNode* createNode(int data) {
     struct TNode* newNode = (struct TNode*)malloc(sizeof(struct TNode));
     newNode->data = data;
@@ -39,65 +39,6 @@ struct TNode* insert(struct TNode* root, int data) {
         root->right = insert(root->right, data);
     }
     return root;
-}
-
-// Function to create an empty queue
-struct Queue* createQueue() {
-    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
-    queue->front = queue->rear = NULL;
-    return queue;
-}
-
-// Function to enqueue a tree node
-void enqueue(struct Queue* queue, struct TNode* treeNode) {
-    struct QueueNode* newNode = (struct QueueNode*)malloc(sizeof(struct QueueNode));
-    newNode->treeNode = treeNode;
-    newNode->link = NULL;
-    if (queue->rear == NULL) {
-        queue->front = queue->rear = newNode;
-        return;
-    }
-    queue->rear->link = newNode;
-    queue->rear = newNode;
-}
-
-// Function to dequeue a tree node
-struct TNode* dequeue(struct Queue* queue) {
-    if (queue->front == NULL)
-        return NULL;
-    struct QueueNode* temp = queue->front;
-    struct TNode* treeNode = temp->treeNode;
-    queue->front = queue->front->link;
-    if (queue->front == NULL)
-        queue->rear = NULL;
-    free(temp);
-    return treeNode;
-}
-
-// Function to check if the queue is empty
-int isEmpty(struct Queue* queue) {
-    return queue->front == NULL;
-}
-
-// Function for level order traversal
-void levelOrder(struct TNode* root) {
-    if (root == NULL)
-        return;
-    
-    struct Queue* queue = createQueue();
-    enqueue(queue, root);
-
-    printf("Level Order Traversal: ");
-    while (!isEmpty(queue)) {
-        struct TNode* tempNode = dequeue(queue);
-        printf("%d ", tempNode->data);
-
-        if (tempNode->left != NULL)
-            enqueue(queue, tempNode->left);
-        if (tempNode->right != NULL)
-            enqueue(queue, tempNode->right);
-    }
-    printf("\n");
 }
 
 // Function for inorder traversal
@@ -125,6 +66,64 @@ void postorder(struct TNode* root) {
         postorder(root->right);
         printf("%d ", root->data);
     }
+}
+
+// Function to create an empty queue
+struct Queue* createQueue() {
+    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+    queue->front = queue->rear = NULL;
+    return queue;
+}
+
+// Function to check if the queue is empty
+int isEmpty(struct Queue* queue) {
+    return queue->front == NULL;
+}
+    
+// Function to enqueue a tree node
+void enqueue(struct Queue* queue, struct TNode* treeNode) {
+    struct QNode* newNode = (struct QNode*)malloc(sizeof(struct QNode));
+    newNode->node = treeNode;
+    newNode->link = NULL;
+    if (queue->rear == NULL) {
+        queue->front = queue->rear = newNode;
+        return;
+    }
+    queue->rear->link = newNode;
+    queue->rear = newNode;
+}
+
+// Function to dequeue a tree node
+struct TNode* dequeue(struct Queue* queue) {
+    if (queue->front == NULL)
+        return NULL;
+    struct QNode* temp = queue->front;
+    struct TNode* treeNode = temp->node;
+    queue->front = queue->front->link;
+    if (queue->front == NULL)
+        queue->rear = NULL;
+    free(temp);
+    return treeNode;
+}
+
+// Function for level order traversal
+void levelOrder(struct TNode* root) {
+    if (root == NULL)
+        return;
+    
+    struct Queue* queue = createQueue();
+    enqueue(queue, root);
+
+    while (!isEmpty(queue)) {
+        struct TNode* tempNode = dequeue(queue);
+        printf("%d ", tempNode->data);
+
+        if (tempNode->left != NULL)
+            enqueue(queue, tempNode->left);
+        if (tempNode->right != NULL)
+            enqueue(queue, tempNode->right);
+    }
+    printf("\n");
 }
 
 // Function to display menu
