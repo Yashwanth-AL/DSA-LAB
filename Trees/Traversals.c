@@ -1,9 +1,11 @@
+//Develop a menu driven program to implement binary search tree and traversals techniques
+
 #include <stdio.h>
 #include <stdlib.h>
 
 // Define a structure for tree nodes
 struct TreeNode {
-    int val;
+    int data;
     struct TreeNode *left;
     struct TreeNode *right;
 };
@@ -11,40 +13,50 @@ struct TreeNode {
 // Function to create a new tree node
 struct TreeNode* createNode(int value) {
     struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
-    newNode->val = value;
+    newNode->data = value;
     newNode->left = NULL;
     newNode->right = NULL;
     return newNode;
 }
 
-void inorderTraversal(struct TreeNode* root) {
+// Function to insert a node into BST
+struct TreeNode* insert(struct TreeNode* root, int data) {
     if (root == NULL) {
-        return;
+        return createNode(data);
     }
-    inorderTraversal(root->left);
-    printf("%d ", root->val);
-    inorderTraversal(root->right);
+    if (data < root->data) {
+        root->left = insert(root->left, data);
+    } else if (data > root->data) {
+        root->right = insert(root->right, data);
+    }
+    return root;
 }
 
-void preorderTraversal(struct TreeNode* root) {
-    if (root == NULL) {
-        return;
+void inorder(struct TreeNode* root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d ", root->data);
+        inorder(root->right);
     }
-    printf("%d ", root->val);
-    preorderTraversal(root->left);
-    preorderTraversal(root->right);
 }
 
-void postorderTraversal(struct TreeNode* root) {
-    if (root == NULL) {
-        return;
+void preorder(struct TreeNode* root) {
+    if (root != NULL) {
+        printf("%d ", root->data);
+        preorder(root->left);
+        preorder(root->right);
     }
-    postorderTraversal(root->left);
-    postorderTraversal(root->right);
-    printf("%d ", root->val);
 }
 
-void levelOrderTraversal(struct TreeNode* root) {
+void postorder(struct TreeNode* root) {
+    if (root != NULL){
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d ", root->data);
+    }
+}
+
+void levelOrder(struct TreeNode* root) {
     if (root == NULL) {
         return;
     }
@@ -54,7 +66,7 @@ void levelOrderTraversal(struct TreeNode* root) {
 
     while (front <= rear) {
         struct TreeNode* current = queue[front++];
-        printf("%d ", current->val);
+        printf("%d ", current->data);
 
         if (current->left != NULL) {
             queue[++rear] = current->left;
@@ -65,57 +77,53 @@ void levelOrderTraversal(struct TreeNode* root) {
     }
 }
 
-// Function to build a sample binary tree
-struct TreeNode* buildSampleTree() {
-    struct TreeNode* root = createNode(1);
-    root->left = createNode(2);
-    root->right = createNode(3);
-    root->left->left = createNode(4);
-    root->left->right = createNode(5);
-    return root;
+// Function to display menu
+void displayMenu() {
+    printf("\n\nBinary Search Tree Operations:");
+    printf("\n1. Insert Element");
+    printf("\n2. Inorder Traversal");
+    printf("\n3. Preorder Traversal");
+    printf("\n4. Postorder Traversal");
+    printf("\n5. Level Order Traversal");
+    printf("\n6. Exit\n");
+    printf("\nEnter your choice: ");
 }
 
 int main() {
     struct TreeNode* root = NULL;
-    int choice;
+    int choice, data;
 
     do {
-        printf("\nBinary Tree Traversal Menu:");
-        printf("\n1. Build Sample Tree");
-        printf("\n2. Inorder Traversal");
-        printf("\n3. Preorder Traversal");
-        printf("\n4. Postorder Traversal");
-        printf("\n5. Level-order Traversal");
-        printf("\n6. Exit");
-        printf("\nEnter your choice: ");
+        displayMenu();
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                root = buildSampleTree();
-                printf("\nSample tree built successfully.");
+                printf("Enter data to insert: ");
+                scanf("%d", &data);
+                root = insert(root, data);
                 break;
             case 2:
-                printf("\nInorder Traversal: ");
-                inorderTraversal(root);
+                printf("Inorder Traversal: ");
+                inorder(root);
                 break;
             case 3:
-                printf("\nPreorder Traversal: ");
-                preorderTraversal(root);
+                printf("Preorder Traversal: ");
+                preorder(root);
                 break;
             case 4:
-                printf("\nPostorder Traversal: ");
-                postorderTraversal(root);
+                printf("Postorder Traversal: ");
+                postorder(root);
                 break;
             case 5:
-                printf("\nLevel-order Traversal: ");
-                levelOrderTraversal(root);
+                printf("Level-order Traversal: ");
+                levelOrder(root);
                 break;
             case 6:
                 printf("\nExiting program...");
                 break;
             default:
-                printf("\nInvalid choice! Please enter a valid option.");
+                printf("\nInvalid choice! Please enter a valid option.\n");
         }
     } while (choice != 6);
 
