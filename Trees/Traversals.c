@@ -3,14 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define a structure for tree nodes
 struct TreeNode {
     int data;
     struct TreeNode *left;
     struct TreeNode *right;
 };
 
-// Function to create a new tree node
 struct TreeNode* createNode(int value) {
     struct TreeNode* newNode = (struct TreeNode*)malloc(sizeof(struct TreeNode));
     newNode->data = value;
@@ -19,16 +17,15 @@ struct TreeNode* createNode(int value) {
     return newNode;
 }
 
-// Function to insert a node into BST
 struct TreeNode* insert(struct TreeNode* root, int data) {
     if (root == NULL) {
-        return createNode(data);
-    }
-    if (data < root->data) {
+        root = createNode(data);
+    } else if (data < root->data) {
         root->left = insert(root->left, data);
     } else if (data > root->data) {
         root->right = insert(root->right, data);
-    }
+    } else
+        printf("%d already present in tree\n", data);
     return root;
 }
 
@@ -77,7 +74,6 @@ void levelOrder(struct TreeNode* root) {
     }
 }
 
-// Function to display menu
 void displayMenu() {
     printf("\n\nBinary Search Tree Operations:");
     printf("\n1. Insert Element");
