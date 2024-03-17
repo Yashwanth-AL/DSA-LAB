@@ -146,7 +146,6 @@ void inorder(struct Node *root) {
     }
 }
 
-// Function to perform pre-order traversal of the tree
 void preorder(struct Node *root) {
     if (root != NULL) {
         printf("%d ", root->data);
@@ -184,18 +183,22 @@ void levelOrder(struct Node *root) {
     }
 }
 
-void display(struct Node *root, int level) {
-    if (root == NULL)
+void display(struct Node* root, int level) {
+    if(root == NULL) {
         return;
+    }
+    display(root->right ,level+1);
 
-    display(root->right, level + 1);
-    printf("\n");
-
-    for (int i = 0; i < level; i++)
-        printf("    ");
-    printf("%d", root->data);
-
-    display(root->left, level + 1);
+    if(level != 0) {
+        for(int i = 0; i < level-1; i++) {
+            printf("|\t");
+        }
+        printf("|------->%d\n", root->data);
+    }
+    else {
+        printf("%d\n",root->data);
+    }
+    display(root->left ,level+1);
 }
 
 int main() {
