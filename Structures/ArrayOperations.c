@@ -96,18 +96,17 @@ int main() {
 
 void insertByPosition(int *arr, int *n, int pos, int key) {
     
-    if (pos < 1 || pos > *n) {
+    if (pos < 1 || pos > *n+1) {
         printf("Invalid position\n");
         return;
     }
-    
-    (*n)++;
-    
-    for (int i = *n - 1; i > pos-1; i--) {
-        arr[i] = arr[i - 1];
+
+    for (int i = *n-1; i >= pos-1; i--) {
+        arr[i+1] = arr[i];
     }
 
     arr[pos-1] = key;
+    (*n)++;
 
     printf("Element %d inserted at position %d\n", key, pos);
 }
@@ -178,13 +177,11 @@ void sort(int *arr, int *n) {
 
 void insertByOrder(int *arr, int *n, int key) {
     int i;
-    (*n)++;
-   
-    for (i = *n - 2; i >= 0 && key < arr[i]; i--) {
+    for (i = *n - 1; i >= 0 && key < arr[i]; i--) {
         arr[i + 1] = arr[i];
     }
     arr[i + 1] = key;
-
+    (*n)++;
     printf("Element %d inserted in order\n", key);
 }
 
@@ -196,7 +193,7 @@ void searchByKey(int *arr, int *n, int key) {
         }
     }
 
-    printf("Key %d nogit stt found\n", key);
+    printf("Key %d not found\n", key);
 }
 
 void searchByPosition(int *arr, int *n, int pos) {
