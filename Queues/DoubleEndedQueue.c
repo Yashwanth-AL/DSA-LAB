@@ -30,7 +30,7 @@ void display(Que* q){
     printf("\n");
 }
 
-void insertAtFront(Que* q, int val){
+void enqueueAtFront(Que* q, int val){
     if(isEmpty(q)){
         q->front = 0;
         q->arr[++q->rear] = val;
@@ -44,7 +44,7 @@ void insertAtFront(Que* q, int val){
         printf("Front insertion not possible\n");
 }
 
-void insertAtRear(Que* q, int val){
+void enqueueAtRear(Que* q, int val){
     if(isEmpty(q)){
         q->front = 0;
         q->arr[++q->rear] = val;
@@ -58,7 +58,7 @@ void insertAtRear(Que* q, int val){
         printf("Rear insertion is not possible\n");
 }
 
-int deleteAtFront(Que* q){
+int dequeueAtFront(Que* q){
     if(isEmpty(q)){
         printf("Empty Queue\nDelete At Front Not Possible\n");
         return -1;
@@ -70,7 +70,7 @@ int deleteAtFront(Que* q){
     return item;
 }
 
-int deleteAtRear(Que* q){
+int dequeueAtRear(Que* q){
     if(isEmpty(q)){
         printf("Empty Queue\nDelete At Rear Not Possible\n");
         return -1;
@@ -87,27 +87,27 @@ int main(){
     initQue(&q);
     int choice, val;
     do{
-        printf("\n1- Insert at front\n2- Insert at rear\n");
-        printf("3- Delete at front\n4- Delete at rear\n");
+        printf("\n1- Enqueue at front\n2- Enqueue at rear\n");
+        printf("3- Dequeue at front\n4- Dequeue at rear\n");
         printf("5- Display\n6- Exit\n");
         printf("Enter your choice: ");
         scanf("%d",&choice);
         switch(choice){
-            case 1: printf("Enter value to insert at front: ");
+            case 1: printf("Enter value to Enqueue at front: ");
                     scanf("%d",&val);
-                    insertAtFront(&q, val);
+                    enqueueAtFront(&q, val);
                     break;
-            case 2: printf("Enter value to insert at rear: ");
+            case 2: printf("Enter value to Enqueue at rear: ");
                     scanf("%d",&val);
-                    insertAtRear(&q, val);
+                    enqueueAtRear(&q, val);
                     break;
-            case 3: val = deleteAtFront(&q);
+            case 3: val = dequeueAtFront(&q);
                     if(val != -1)
-                        printf("Deleted element at front is: %d\n",val);
+                        printf("Dequeued element at front is: %d\n",val);
                     break;
-            case 4: val = deleteAtRear(&q);
+            case 4: val = dequeueAtRear(&q);
                     if(val != -1)
-                        printf("Deleted element at rear is: %d\n",val);
+                        printf("Dequeued element at rear is: %d\n",val);
                     break;
             case 5: display(&q);
                     break;
