@@ -373,3 +373,20 @@ int main() {
 
     } while (choice != 0);
 }
+
+
+// int searchDataByPosition(List *list, int pos) {
+//     if(list->head->nlink == NULL){
+//         printf("List is empty. No data found.\n");
+//         return -1;
+//     }
+//     if(pos < 1 || pos > list->head->data){
+//         printf("Invalid position.\n");
+//         return -1;
+//     }
+//     Node *current = list->head->nlink;
+//     for(int i = 1; i <= pos; i++){
+//         current = current->nlink;
+//     }
+//     return current->data;
+// }

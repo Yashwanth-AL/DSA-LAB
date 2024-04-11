@@ -24,7 +24,7 @@ int isFull(Que* q) {
 
 void enque(Que* q, int value) {
     if (isFull(q)) {
-        printf("Queue overflow!!!\n");
+        printf("Queue Overflow!!!\n");
         return;
     }
     if (isEmpty(q)) {

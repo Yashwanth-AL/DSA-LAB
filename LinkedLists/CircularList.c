@@ -247,7 +247,6 @@ void reverseList(List *list){
     Node *current = list->head->link;
     Node *previous = NULL;
     Node *next = NULL;
-    Node *start = list->head->link;
     do {
         next = current->link;
         current->link = previous;
@@ -255,7 +254,7 @@ void reverseList(List *list){
         current = next;
     } while (current != list->head->link);
     list->head->link = previous;
-    start->link = previous;
+    current->link = previous;
 }
 
 void printMenu() {
@@ -375,4 +374,21 @@ int main() {
         end:;
 
     } while (choice != 0);
+}
+
+
+int searchDataByPosition(List *list, int pos) {
+    if(list->head->link == NULL){
+        printf("List is empty. No data found.\n");
+        return -1;
+    }
+    if(pos < 1 || pos > list->head->data){
+        printf("Invalid position.\n");
+        return -1;
+    }
+    Node *current = list->head->link;
+    for(int i = 1; i <= pos; i++){
+        current = current->link;
+    }
+    return current->data;
 }
